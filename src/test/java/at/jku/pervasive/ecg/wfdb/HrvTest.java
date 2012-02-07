@@ -10,6 +10,17 @@ public class HrvTest extends PhysioToolkitTestCase {
     new HrvTest().testHrv();
   }
 
+  public void testBaseDirectoryForRecord() throws Exception {
+    File chf03 = getWFDBFile("/chf03.dat");
+    HRVOptions options = new HRVOptions("chf03", "ecg");
+    options.setBaseDirectory(chf03.getParentFile());
+    HRV hrv = physioToolkit.hrv(options);
+
+    assertNotNull(hrv);
+    assertEquals(0.892769, hrv.getAVNN(), 0.000001D);
+    assertEquals(0.0612485, hrv.getSDNN(), 0.000001D);
+  }
+
   public void testHrv() throws Exception {
     File testFile = getWFDBFile("/test.dat");
     HRV hrv = physioToolkit.hrv(testFile, "qrs");
@@ -50,8 +61,7 @@ public class HrvTest extends PhysioToolkitTestCase {
 
   public void testLargeFileHRVOptions() throws Exception {
     File chf03 = getWFDBFile("/chf03.dat");
-    HRVOptions options = new HRVOptions("chf03", "ecg");
-    options.setBaseDirectory(chf03.getParentFile());
+    HRVOptions options = new HRVOptions(chf03, "ecg");
     HRV hrv = physioToolkit.hrv(options);
 
     assertNotNull(hrv);
