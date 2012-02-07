@@ -6,9 +6,13 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 
-public abstract class PhysioToolkitTestCase extends TestCase {
+public class PhysioToolkitTestCase extends TestCase {
 
   protected PhysioToolkit physioToolkit;
+
+  public void testIsPhysioToolkitInstalled() throws Exception {
+    assertTrue(physioToolkit.isInstalled());
+  }
 
   protected File getFile(String path) throws URISyntaxException {
     URL url = this.getClass().getResource(path);

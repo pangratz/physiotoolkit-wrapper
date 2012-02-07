@@ -50,6 +50,12 @@ public class PhysioToolkit {
     throw new IllegalStateException();
   }
 
+  public boolean isInstalled() throws IOException, InterruptedException {
+    ProcessBuilder pb = createProcessBuilder("hash", "wfdbdesc");
+    Process process = pb.start();
+    return (process.waitFor() == 0);
+  }
+
   public void rdsamp(File edf) {
 
   }
