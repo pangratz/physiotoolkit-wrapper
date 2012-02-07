@@ -121,6 +121,30 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     assertEquals("rrfile.rr", cmd.get(2));
   }
 
+  public void testRRIntervalsInMsec() {
+    HRVOptions options = new HRVOptions("rrfile.rr");
+    options.setRrInMSec(true);
+    options.setEnd(10, 0);
+
+    List<String> cmd = options.getCommand();
+    assertEquals(6, cmd.size());
+    assertEquals("-m", cmd.get(1));
+    assertEquals("-R", cmd.get(2));
+    assertEquals("rrfile.rr", cmd.get(3));
+    assertEquals("00:00:00", cmd.get(4));
+    assertEquals("00:10:00", cmd.get(5));
+  }
+
+  public void testRRIntervalsInMsecWhenNoRRFile() {
+    HRVOptions options = new HRVOptions("myfile", "qrs");
+    options.setRrInMSec(true);
+
+    List<String> cmd = options.getCommand();
+    assertEquals(3, cmd.size());
+    assertEquals("myfile", cmd.get(1));
+    assertEquals("qrs", cmd.get(2));
+  }
+
   public void testStartTime() {
     HRVOptions opts = new HRVOptions("/rrfile.rr");
     opts.setStart(10, 11);

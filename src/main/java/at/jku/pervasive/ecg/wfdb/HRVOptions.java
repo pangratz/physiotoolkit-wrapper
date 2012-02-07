@@ -50,6 +50,9 @@ public class HRVOptions {
       cmd.add("-M");
     }
     if (isRR) {
+      if (rrInMSec) {
+        cmd.add("-m");
+      }
       cmd.add("-R");
       cmd.add(file);
     } else {
