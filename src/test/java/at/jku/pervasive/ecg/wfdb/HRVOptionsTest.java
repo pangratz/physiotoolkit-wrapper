@@ -8,6 +8,17 @@ import org.joda.time.LocalTime;
 
 public class HRVOptionsTest extends PhysioToolkitTestCase {
 
+  public void testBaseDirectory() throws URISyntaxException {
+    File chf03dat = getFile("/chf03.dat");
+    HRVOptions opts = new HRVOptions("chf03", "ecg");
+    opts.setBaseDirectory(chf03dat.getParentFile());
+
+    List<String> cmd = opts.getCommand();
+    assertEquals(3, cmd.size());
+    assertEquals("chf03", cmd.get(1));
+    assertEquals("ecg", cmd.get(2));
+  }
+
   public void testEndTime() {
     HRVOptions opts = new HRVOptions("/rrfile.rr");
     opts.setStart(5, 42);

@@ -8,6 +8,7 @@ import org.joda.time.LocalTime;
 
 public class HRVOptions {
 
+  private File baseDirectory;
   private String file, annotation;
   private double filt, hwin;
   private String inputTimeFormat;
@@ -41,6 +42,10 @@ public class HRVOptions {
 
   public String getAnnotation() {
     return annotation;
+  }
+
+  public File getBaseDirectory() {
+    return baseDirectory;
   }
 
   public List<String> getCommand() {
@@ -142,6 +147,10 @@ public class HRVOptions {
 
   public void setAnnotation(String annotation) {
     this.annotation = annotation;
+  }
+
+  public void setBaseDirectory(File baseDirectory) {
+    this.baseDirectory = baseDirectory;
   }
 
   public void setEnd(int m, int s) {

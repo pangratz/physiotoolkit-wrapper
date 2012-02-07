@@ -52,6 +52,17 @@ public class HrvTest extends PhysioToolkitTestCase {
     assertEquals(0.0612485, hrv.getSDNN(), 0.000001D);
   }
 
+  public void testLargeFileHRVOptions() throws Exception {
+    File chf03dat = getFile("/chf03.dat");
+    HRVOptions options = new HRVOptions("chf03", "ecg");
+    options.setBaseDirectory(chf03dat.getParentFile());
+    HRV hrv = physioToolkit.hrv(options);
+
+    assertNotNull(hrv);
+    assertEquals(0.892769, hrv.getAVNN(), 0.000001D);
+    assertEquals(0.0612485, hrv.getSDNN(), 0.000001D);
+  }
+
   public void testLargeFileWithOutlierDetection() throws Exception {
     File chf03 = getFile("/chf03.dat");
     chf03 = new File(chf03.getParentFile(), "chf03");

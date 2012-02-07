@@ -46,8 +46,19 @@ public class PhysioToolkit {
     return hrv(edf, annotator, null, null, params);
   }
 
-  public HRV hrv(HRVOptions options) {
-    throw new IllegalStateException();
+  public HRV hrv(HRVOptions options) throws Exception {
+    ProcessBuilder pb = createProcessBuilder(options.getCommand());
+    pb.redirectErrorStream(true);
+    File baseDirectory = options.getBaseDirectory();
+    if (baseDirectory != null && baseDirectory.exists()) {
+      pb.directory(baseDirectory);
+    }
+    Process start = pb.start();
+    start.waitFor();
+    InputStream in = start.getInputStream();
+    HRV hrvResult = new HRV(IOUtils.toString(in));
+    IOUtils.closeQuietly(in);
+    return hrvResult;
   }
 
   public boolean isInstalled() throws IOException, InterruptedException {
