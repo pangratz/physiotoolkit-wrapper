@@ -46,6 +46,9 @@ public class HRVOptions {
   public List<String> getCommand() {
     List<String> cmd = new ArrayList<String>();
     cmd.add("get_hrv");
+    if (outputMsec) {
+      cmd.add("-M");
+    }
     if (isRR) {
       cmd.add("-R");
       cmd.add(file);

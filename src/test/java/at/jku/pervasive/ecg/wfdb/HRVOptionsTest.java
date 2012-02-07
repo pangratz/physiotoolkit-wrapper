@@ -50,6 +50,20 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     }
   }
 
+  public void testMsec() {
+    HRVOptions options = new HRVOptions("rrfile.rr");
+    options.setOutputMsec(true);
+    options.setEnd(10, 0);
+
+    List<String> cmd = options.getCommand();
+    assertEquals(6, cmd.size());
+    assertEquals("-M", cmd.get(1));
+    assertEquals("-R", cmd.get(2));
+    assertEquals("rrfile.rr", cmd.get(3));
+    assertEquals("00:00:00", cmd.get(4));
+    assertEquals("00:10:00", cmd.get(5));
+  }
+
   public void testNullAnnotation() throws URISyntaxException {
     File testFile = getFile("/test.dat");
     testFile = new File(testFile.getParentFile(), "test");
