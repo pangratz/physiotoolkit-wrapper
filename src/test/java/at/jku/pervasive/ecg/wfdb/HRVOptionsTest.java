@@ -29,29 +29,6 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     assertEquals("00:10:11", cmd.get(4));
   }
 
-  public void testInstantation() throws Exception {
-    File testFile = getFile("/test.dat");
-    testFile = new File(testFile.getParentFile(), "test");
-
-    HRVOptions options = new HRVOptions(testFile, "qrs");
-    options.setStart(10, 11);
-    options.setEnd(new LocalTime(1, 10, 11));
-    List<String> cmd = options.getCommand();
-
-    assertNotNull(cmd);
-    assertEquals(5, cmd.size());
-    assertTrue(cmd.contains(testFile.getAbsolutePath()));
-    assertTrue(cmd.contains("qrs"));
-
-    int fileIndex = cmd.indexOf(testFile.getAbsolutePath());
-    int annotationIndex = cmd.indexOf("qrs");
-
-    assertEquals("get_hrv", cmd.get(0));
-    assertTrue(fileIndex == annotationIndex - 1);
-    assertEquals("00:10:11", cmd.get(annotationIndex + 1));
-    assertEquals("01:10:11", cmd.get(annotationIndex + 2));
-  }
-
   public void testInvalidAnnotation() throws URISyntaxException {
     File testFile = getFile("/test.dat");
     testFile = new File(testFile.getParentFile(), "test");
@@ -97,6 +74,28 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     } catch (Exception e) {
       fail("should not throw an exception");
     }
+  }
+
+  public void testRecordFile() throws Exception {
+    HRVOptions options = new HRVOptions("testFile", "qrs");
+
+    List<String> cmd = options.getCommand();
+    assertEquals(3, cmd.size());
+    assertEquals("testFile", cmd.get(1));
+    assertEquals("qrs", cmd.get(2));
+  }
+
+  public void testRecordFileWithStartAndEndTime() throws Exception {
+    HRVOptions options = new HRVOptions("testFile", "qrs");
+    options.setStart(10, 11);
+    options.setEnd(new LocalTime(1, 10, 11));
+
+    List<String> cmd = options.getCommand();
+    assertEquals(5, cmd.size());
+    assertEquals("testFile", cmd.get(1));
+    assertEquals("qrs", cmd.get(2));
+    assertEquals("00:10:11", cmd.get(3));
+    assertEquals("01:10:11", cmd.get(4));
   }
 
   public void testRRFile() {
