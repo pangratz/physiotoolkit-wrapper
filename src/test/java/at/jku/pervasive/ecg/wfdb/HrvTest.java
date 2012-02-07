@@ -11,8 +11,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testHrv() throws Exception {
-    File testFile = getFile("/test.dat");
-    testFile = new File(testFile.getParentFile(), "test");
+    File testFile = getWFDBFile("/test.dat");
     HRV hrv = physioToolkit.hrv(testFile, "qrs");
 
     assertNotNull(hrv);
@@ -21,8 +20,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testHrvWithTimes() throws Exception {
-    File testFile = getFile("/test.edf");
-    testFile = new File(testFile.getParentFile(), "test");
+    File testFile = getWFDBFile("/test.edf");
     HRV hrv = physioToolkit.hrv(testFile, "qrs", new LocalTime(0, 0),
         new LocalTime(7, 0));
 
@@ -32,8 +30,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testHrvWithTimes2() throws Exception {
-    File testFile = getFile("/test.edf");
-    testFile = new File(testFile.getParentFile(), "test");
+    File testFile = getWFDBFile("/test.edf");
     HRV hrv = physioToolkit.hrv(testFile, "qrs", new LocalTime(1, 0),
         new LocalTime(2, 0));
 
@@ -43,8 +40,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFile() throws Exception {
-    File chf03 = getFile("/chf03.dat");
-    chf03 = new File(chf03.getParentFile(), "chf03");
+    File chf03 = getWFDBFile("/chf03.dat");
     HRV hrv = physioToolkit.hrv(chf03, "ecg");
 
     assertNotNull(hrv);
@@ -53,9 +49,9 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFileHRVOptions() throws Exception {
-    File chf03dat = getFile("/chf03.dat");
+    File chf03 = getWFDBFile("/chf03.dat");
     HRVOptions options = new HRVOptions("chf03", "ecg");
-    options.setBaseDirectory(chf03dat.getParentFile());
+    options.setBaseDirectory(chf03.getParentFile());
     HRV hrv = physioToolkit.hrv(options);
 
     assertNotNull(hrv);
@@ -64,8 +60,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFileWithOutlierDetection() throws Exception {
-    File chf03 = getFile("/chf03.dat");
-    chf03 = new File(chf03.getParentFile(), "chf03");
+    File chf03 = getWFDBFile("/chf03.dat");
     HRV hrv = physioToolkit.hrv(chf03, "ecg", "-f 0.2 20 -x 0.4 2.0",
         "-p 20 50");
 
@@ -76,8 +71,7 @@ public class HrvTest extends PhysioToolkitTestCase {
 
   public void testLargeFileWithOutlierDetectionAndStartAndEndTime()
       throws Exception {
-    File chf03 = getFile("/chf03.dat");
-    chf03 = new File(chf03.getParentFile(), "chf03");
+    File chf03 = getWFDBFile("/chf03.dat");
     HRV hrv = physioToolkit.hrv(chf03, "ecg", new LocalTime(0, 0),
         new LocalTime(1, 0), "-s", "-M", "-f 0.2 20 -x 0.4 2.0", "-p 20 50");
 
