@@ -19,6 +19,32 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     assertEquals("ecg", cmd.get(2));
   }
 
+  public void testBaseDirectoryForRecord() throws Exception {
+    File chf03dat = getFile("/chf03.dat");
+    File base = chf03dat.getParentFile();
+    File chf03 = new File(base, "chf03");
+    HRVOptions opts = new HRVOptions(chf03, "ecg");
+
+    List<String> cmd = opts.getCommand();
+    assertEquals(3, cmd.size());
+    assertEquals(base, opts.getBaseDirectory());
+    assertEquals("chf03", cmd.get(1));
+    assertEquals("ecg", cmd.get(2));
+  }
+
+  public void testBaseDirectoryForRR() throws Exception {
+    File chf03dat = getFile("/chf03.dat");
+    File base = chf03dat.getParentFile();
+    File chf03rr = new File(base, "chf03.rr");
+    HRVOptions opts = new HRVOptions(chf03rr);
+
+    List<String> cmd = opts.getCommand();
+    assertEquals(3, cmd.size());
+    assertEquals(base, opts.getBaseDirectory());
+    assertEquals("-R", cmd.get(1));
+    assertEquals("chf03.rr", cmd.get(2));
+  }
+
   public void testEndTime() {
     HRVOptions opts = new HRVOptions("/rrfile.rr");
     opts.setStart(5, 42);

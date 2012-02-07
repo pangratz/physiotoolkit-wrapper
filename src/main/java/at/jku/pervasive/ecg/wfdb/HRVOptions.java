@@ -20,10 +20,20 @@ public class HRVOptions {
   private boolean shortTermStats;
   private LocalTime start, end;
 
-  public HRVOptions(File file, String annotation) {
+  public HRVOptions(File rrFile) {
     super();
-    if (file != null) {
-      this.file = file.getAbsolutePath();
+    if (rrFile != null) {
+      this.file = rrFile.getName();
+      this.baseDirectory = rrFile.getParentFile();
+      this.isRR = true;
+    }
+  }
+
+  public HRVOptions(File recordFile, String annotation) {
+    super();
+    if (recordFile != null) {
+      this.file = recordFile.getName();
+      this.baseDirectory = recordFile.getParentFile();
     }
     this.annotation = annotation;
   }
