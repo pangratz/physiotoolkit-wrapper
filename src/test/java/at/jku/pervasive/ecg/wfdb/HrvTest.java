@@ -6,10 +6,6 @@ import org.joda.time.LocalTime;
 
 public class HrvTest extends PhysioToolkitTestCase {
 
-  public static void main(String[] args) throws Exception {
-    new HrvTest().testHrv();
-  }
-
   public void testBaseDirectoryForRecord() throws Exception {
     File chf03 = getWFDBFile("/chf03.dat");
     HRVOptions options = new HRVOptions("chf03", "ecg");
