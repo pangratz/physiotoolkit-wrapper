@@ -4,6 +4,9 @@ import java.io.File;
 
 import org.joda.time.LocalTime;
 
+/**
+ * Test assertions taken from http://www.physionet.org/tutorials/hrv-toolkit/
+ */
 public class HrvTest extends PhysioToolkitTestCase {
 
   public void testBaseDirectoryForRecord() throws Exception {
