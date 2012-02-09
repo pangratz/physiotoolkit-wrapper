@@ -5,7 +5,7 @@ import java.io.File;
 public class SqrsTest extends PhysioToolkitTestCase {
 
   public void testSqrs() throws Exception {
-    File testFile = getFile("/test.edf");
+    File testFile = getFile("/chf03.dat");
     physioToolkit.sqrs(testFile);
   }
 

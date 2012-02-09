@@ -67,8 +67,7 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
   }
 
   public void testInvalidAnnotation() throws URISyntaxException {
-    File testFile = getFile("/test.dat");
-    testFile = new File(testFile.getParentFile(), "test");
+    File testFile = getWFDBFile("/chf03.dat");
     try {
       new HRVOptions(testFile, "");
     } catch (Exception e) {
@@ -102,8 +101,7 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
   }
 
   public void testNullAnnotation() throws URISyntaxException {
-    File testFile = getFile("/test.dat");
-    testFile = new File(testFile.getParentFile(), "test");
+    File testFile = getWFDBFile("/chf03.dat");
     try {
       new HRVOptions(testFile, null);
     } catch (Exception e) {
