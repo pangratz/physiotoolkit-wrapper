@@ -62,9 +62,17 @@ public class PhysioToolkit {
   }
 
   public boolean isInstalled() throws IOException, InterruptedException {
-    ProcessBuilder pb = createProcessBuilder("hash", "wfdbdesc");
-    Process process = pb.start();
-    return (process.waitFor() == 0);
+    /**
+     * Implementation: check if every needed command is available. This is done
+     * by executing the hash command and looking at the exit code. The exit code
+     * 0 indicates the command is installed correctly. Assuming every needed
+     * command is available, he exit code sum up to 0.
+     */
+    int status = 0;
+    status += execute("hash", "get_hrv");
+    status += execute("hash", "rdsamp");
+    status += execute("hash", "sqrs");
+    return (status == 0);
   }
 
   public void rdsamp(File edf) {
@@ -98,6 +106,13 @@ public class PhysioToolkit {
 
   protected ProcessBuilder createProcessBuilder(String... command) {
     return createProcessBuilder(Arrays.asList(command));
+  }
+
+  protected int execute(String... command) throws IOException,
+      InterruptedException {
+    ProcessBuilder pb = createProcessBuilder(command);
+    Process process = pb.start();
+    return process.waitFor();
   }
 
   private void setLocale(Map<String, String> env) {
