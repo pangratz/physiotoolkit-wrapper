@@ -101,14 +101,15 @@ public class PhysioToolkit {
   }
 
   private void setLocale(Map<String, String> env) {
-    env.put("LC_ALL", "C");
-    // env.put("LANG", "C");
-    // env.put("LC_COLLATE", "C");
-    // env.put("LC_CTYPE", "C");
-    // env.put("LC_MESSAGES", "C");
-    // env.put("LC_MONETARY", "C");
-    // env.put("LC_NUMERIC", "C");
-    // env.put("LC_TIME", "C");
+    String lang = "en_US.UTF-8";
+    env.put("LANG", lang);
+    env.put("LC_COLLATE", lang);
+    env.put("LC_CTYPE", lang);
+    env.put("LC_MESSAGES", lang);
+    env.put("LC_MONETARY", lang);
+    env.put("LC_NUMERIC", lang);
+    env.put("LC_TIME", lang);
+    // env.put("LC_ALL", lang);
   }
 
   private void setLocale(ProcessBuilder pb) {
