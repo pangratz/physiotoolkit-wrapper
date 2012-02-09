@@ -67,8 +67,11 @@ public class PhysioToolkit {
     return (process.waitFor() == 0);
   }
 
-  public void rdsamp(File edf) {
-
+  public void rdsamp(File edf) throws IOException, InterruptedException {
+    ProcessBuilder pb = createProcessBuilder("rdsamp", edf.getName());
+    pb.directory(edf.getParentFile());
+    Process process = pb.start();
+    process.waitFor();
   }
 
   public void sqrs(File testFile) throws IOException, InterruptedException {
