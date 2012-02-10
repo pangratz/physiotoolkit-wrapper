@@ -13,7 +13,19 @@ import org.joda.time.LocalTime;
 
 public class PhysioToolkit {
 
-  public void edf2mit(File edfFile) {
+  public void edf2mit(File edfFile) throws IOException, InterruptedException {
+    if (edfFile == null || !edfFile.exists()) {
+      throw new IllegalArgumentException("invalid edfFile");
+    }
+
+    List<String> command = new Edf2MitOptions(edfFile).getCommand();
+    ProcessBuilder pb = createProcessBuilder(command);
+    pb.directory(edfFile.getParentFile());
+    pb.redirectErrorStream(true);
+    Process process = pb.start();
+    process.waitFor();
+    InputStream in = process.getInputStream();
+    System.out.println(IOUtils.toString(in));
   }
 
   public HRV hrv(File edf, String annotator, LocalTime startTime,
