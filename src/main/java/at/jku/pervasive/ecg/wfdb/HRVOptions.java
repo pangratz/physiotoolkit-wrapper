@@ -155,95 +155,116 @@ public class HRVOptions {
     return shortTermStats;
   }
 
-  public void setAnnotation(String annotation) {
+  public HRVOptions setAnnotation(String annotation) {
     this.annotation = annotation;
+    return this;
   }
 
-  public void setBaseDirectory(File baseDirectory) {
+  public HRVOptions setBaseDirectory(File baseDirectory) {
     this.baseDirectory = baseDirectory;
+    return this;
   }
 
-  public void setEnd(int m, int s) {
+  public HRVOptions setEnd(int m, int s) {
     setEnd(new LocalTime(0, m, s));
+    return this;
   }
 
-  public void setEnd(LocalTime end) {
+  public HRVOptions setEnd(LocalTime end) {
     this.end = end;
     if (this.start == null) {
       this.start = new LocalTime(0, 0, 0);
     }
+    return this;
   }
 
-  public void setFile(String file) {
+  public HRVOptions setFile(String file) {
     this.file = file;
+    return this;
   }
 
-  public void setFilt(double filt) {
+  public HRVOptions setFilt(double filt) {
     this.filt = filt;
+    return this;
   }
 
-  public void setHi1(double hi1) {
+  public HRVOptions setHi1(double hi1) {
     this.hi1 = hi1;
+    return this;
   }
 
-  public void setHi2(double hi2) {
+  public HRVOptions setHi2(double hi2) {
     this.hi2 = hi2;
+    return this;
   }
 
-  public void setHi3(double hi3) {
+  public HRVOptions setHi3(double hi3) {
     this.hi3 = hi3;
+    return this;
   }
 
-  public void setHi4(double hi4) {
+  public HRVOptions setHi4(double hi4) {
     this.hi4 = hi4;
+    return this;
   }
 
-  public void setHwin(double hwin) {
+  public HRVOptions setHwin(double hwin) {
     this.hwin = hwin;
+    return this;
   }
 
-  public void setInputTimeFormat(String inputTimeFormat) {
+  public HRVOptions setInputTimeFormat(String inputTimeFormat) {
     this.inputTimeFormat = inputTimeFormat;
+    return this;
   }
 
-  public void setLo1(double lo1) {
+  public HRVOptions setLo1(double lo1) {
     this.lo1 = lo1;
+    return this;
   }
 
-  public void setLo2(double lo2) {
+  public HRVOptions setLo2(double lo2) {
     this.lo2 = lo2;
+    return this;
   }
 
-  public void setLo3(double lo3) {
+  public HRVOptions setLo3(double lo3) {
     this.lo3 = lo3;
+    return this;
   }
 
-  public void setLo4(double lo4) {
+  public HRVOptions setLo4(double lo4) {
     this.lo4 = lo4;
+    return this;
   }
 
-  public void setNnDiff(String nnDiff) {
+  public HRVOptions setNnDiff(String nnDiff) {
     this.nnDiff = nnDiff;
+    return this;
   }
 
-  public void setOutputMsec(boolean outputMsec) {
+  public HRVOptions setOutputMsec(boolean outputMsec) {
     this.outputMsec = outputMsec;
+    return this;
   }
 
-  public void setRrInMSec(boolean rrInMSec) {
+  public HRVOptions setRrInMSec(boolean rrInMSec) {
     this.rrInMSec = rrInMSec;
+    return this;
   }
 
-  public void setShortTermStats(boolean shortTermStats) {
+  public HRVOptions setShortTermStats(boolean shortTermStats) {
     this.shortTermStats = shortTermStats;
+    return this;
   }
 
-  public void setStart(int m, int s) {
-    setStart(new LocalTime(0, m, s));
+  public HRVOptions setStart(int m, int s) {
+    return setStart(new LocalTime(0, m, s));
   }
 
-  public void setStart(LocalTime start) {
+  public HRVOptions setStart(LocalTime start) {
     this.start = start;
+    return this;
   }
 
   public HRVOptions startTime(LocalTime start) {
