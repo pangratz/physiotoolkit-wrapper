@@ -69,6 +69,7 @@ public class PhysioToolkit {
      * command is available, he exit code sum up to 0.
      */
     int status = 0;
+    status += execute("hash", "edf2mit");
     status += execute("hash", "get_hrv");
     status += execute("hash", "rdsamp");
     status += execute("hash", "sqrs");
