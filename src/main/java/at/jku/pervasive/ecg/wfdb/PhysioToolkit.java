@@ -13,6 +13,9 @@ import org.joda.time.LocalTime;
 
 public class PhysioToolkit {
 
+  public void edf2mit(File edfFile) {
+  }
+
   public HRV hrv(File edf, String annotator, LocalTime startTime,
       LocalTime endTime, String... params) throws Exception {
 
