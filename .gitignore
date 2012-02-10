@@ -28,7 +28,7 @@ target
 *.pydevproject
 .project
 .metadata
-bin/**
+bin
 tmp/**
 tmp/**/*
 *.tmp
