@@ -9,6 +9,7 @@ public class Edf2MitOptions {
 
   private File baseDirectory;
   private final File edfFile;
+  private boolean isBigEndian;
   private final String outputName;
 
   public Edf2MitOptions(File edfFile) {
@@ -35,6 +36,10 @@ public class Edf2MitOptions {
     command.add("-r");
     command.add(outputName);
 
+    if (isBigEndian) {
+      command.add("-b");
+    }
+
     return command;
   }
 
@@ -42,8 +47,17 @@ public class Edf2MitOptions {
     return outputName;
   }
 
+  public boolean isBigEndian() {
+    return isBigEndian;
+  }
+
   public Edf2MitOptions setBaseDirectory(File baseDirectory) {
     this.baseDirectory = baseDirectory;
+    return this;
+  }
+
+  public Edf2MitOptions setBigEndian(boolean isBigEndian) {
+    this.isBigEndian = isBigEndian;
     return this;
   }
 

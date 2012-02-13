@@ -11,7 +11,6 @@ public class Edf2MitOptionsTest extends PhysioToolkitTestCase {
     Edf2MitOptions options = new Edf2MitOptions(edfFile);
 
     List<String> command = options.getCommand();
-    System.out.println(command);
     assertNotNull(command);
     assertEquals(5, command.size());
     assertEquals("edf2mit", command.get(0));
@@ -30,4 +29,24 @@ public class Edf2MitOptionsTest extends PhysioToolkitTestCase {
     assertTrue(command.contains(outputName));
     assertTrue(rIndex + 1 == command.indexOf(outputName));
   }
+
+  public void testBigEndian() throws URISyntaxException {
+    File edfFile = getFile("/20120206171956.EDF");
+    Edf2MitOptions options = new Edf2MitOptions(edfFile);
+    options.setBigEndian(true);
+
+    List<String> command = options.getCommand();
+    assertEquals(6, command.size());
+    assertTrue(command.contains("-b"));
+  }
+
+  public void testDefaultEndian() throws URISyntaxException {
+    File edfFile = getFile("/20120206171956.EDF");
+    Edf2MitOptions options = new Edf2MitOptions(edfFile);
+
+    List<String> command = options.getCommand();
+    assertEquals(5, command.size());
+    assertFalse(command.contains("-b"));
+  }
+
 }
