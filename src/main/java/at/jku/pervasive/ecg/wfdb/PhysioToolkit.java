@@ -17,10 +17,12 @@ public class PhysioToolkit {
       InterruptedException {
     ProcessBuilder pb = createProcessBuilder(options.getCommand());
     pb.redirectErrorStream(true);
+
     File baseDirectory = options.getBaseDirectory();
     if (baseDirectory != null && baseDirectory.exists()) {
       pb.directory(baseDirectory);
     }
+
     Process process = pb.start();
     InputStream in = process.getInputStream();
     System.out.println(IOUtils.toString(in));
