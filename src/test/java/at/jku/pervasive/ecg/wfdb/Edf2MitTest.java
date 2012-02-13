@@ -2,21 +2,44 @@ package at.jku.pervasive.ecg.wfdb;
 
 import java.io.File;
 
+import com.google.common.io.Files;
+
 public class Edf2MitTest extends PhysioToolkitTestCase {
 
+  private File tmpDir;
+
   public void testEdf2Mit() throws Exception {
-    File edfFile = getFile("/20120206171956.EDF");
+    File first = getFile("/20120206171956.EDF");
+    File edfFile = new File(tmpDir, "20120206171956.EDF");
+    Files.copy(first, edfFile);
+
     Edf2MitOptions options = new Edf2MitOptions(edfFile);
-    physioToolkit.edf2mit(edfFile);
+    options.setBaseDirectory(tmpDir);
+    System.out.println(options.getCommand());
+
+    String name = physioToolkit.edf2mit(options);
+
+    File datFile = new File(tmpDir, name + ".dat");
+    assertTrue(datFile.exists());
+    assertTrue(datFile.length() > 0L);
+
+    File heaFile = new File(tmpDir, name + ".hea");
+    assertTrue(heaFile.exists());
+    assertTrue(heaFile.length() > 0L);
   }
 
-  public void testEdf2MitWithNullParameter() {
-    try {
-      physioToolkit.edf2mit(null);
-      fail("should throw an exception");
-    } catch (IllegalArgumentException e) {
-    } catch (Exception e) {
-      fail("should throw an IllegalArgumentException");
+  @Override
+  protected void setUp() throws Exception {
+    super.setUp();
+
+    tmpDir = Files.createTempDir();
+  }
+
+  @Override
+  protected void tearDown() throws Exception {
+    super.tearDown();
+    if (tmpDir != null) {
+      tmpDir.delete();
     }
   }
 
