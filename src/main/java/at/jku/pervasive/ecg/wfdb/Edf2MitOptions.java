@@ -5,12 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+
 public class Edf2MitOptions {
 
   private File baseDirectory;
   private final File edfFile;
   private boolean isBigEndian;
   private final String outputName;
+  private int[] signals;
 
   public Edf2MitOptions(File edfFile) {
     super();
@@ -40,6 +44,11 @@ public class Edf2MitOptions {
       command.add("-b");
     }
 
+    if (signals != null && signals.length > 0) {
+      command.add("-s");
+      command.add(StringUtils.join(ArrayUtils.toObject(signals), " "));
+    }
+
     return command;
   }
 
@@ -58,6 +67,11 @@ public class Edf2MitOptions {
 
   public Edf2MitOptions setBigEndian(boolean isBigEndian) {
     this.isBigEndian = isBigEndian;
+    return this;
+  }
+
+  public Edf2MitOptions setSignals(int... signals) {
+    this.signals = signals;
     return this;
   }
 

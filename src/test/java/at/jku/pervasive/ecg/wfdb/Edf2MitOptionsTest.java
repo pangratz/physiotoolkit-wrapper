@@ -50,4 +50,27 @@ public class Edf2MitOptionsTest extends PhysioToolkitTestCase {
     assertFalse(command.contains("-b"));
   }
 
+  public void testNoSignals() throws URISyntaxException {
+    File edfFile = getFile("/20120206171956.EDF");
+    Edf2MitOptions options = new Edf2MitOptions(edfFile);
+    options.setSignals();
+
+    List<String> command = options.getCommand();
+    assertEquals(5, command.size());
+    assertFalse(command.contains("-s"));
+  }
+
+  public void testSignals() throws URISyntaxException {
+    File edfFile = getFile("/20120206171956.EDF");
+    Edf2MitOptions options = new Edf2MitOptions(edfFile);
+    options.setSignals(0, 1, 2);
+
+    List<String> command = options.getCommand();
+    assertEquals(7, command.size());
+    assertTrue(command.contains("-s"));
+    int sIndex = command.indexOf("-s");
+    assertTrue(command.contains("0 1 2"));
+    assertTrue(sIndex + 1 == command.indexOf("0 1 2"));
+  }
+
 }
