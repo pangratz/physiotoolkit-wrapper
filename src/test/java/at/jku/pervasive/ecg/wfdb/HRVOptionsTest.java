@@ -66,6 +66,14 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     assertEquals("00:10:11", cmd.get(4));
   }
 
+  public void testFilter() {
+    HRVOptions options = new HRVOptions("rrfile.rr");
+    options.setFilter("0.2 20 -x 0.4 2.0");
+
+    List<String> command = options.getCommand();
+    assertTrue(command.contains("-f 0.2 20 -x 0.4 2.0"));
+  }
+
   public void testInvalidAnnotation() throws URISyntaxException {
     File testFile = getWFDBFile("/chf03.dat");
     try {
@@ -98,6 +106,14 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     assertEquals("rrfile.rr", cmd.get(3));
     assertEquals("00:00:00", cmd.get(4));
     assertEquals("00:10:00", cmd.get(5));
+  }
+
+  public void testNnDiff() {
+    HRVOptions options = new HRVOptions("rrfile.rr");
+    options.setNnDiff("20 50");
+
+    List<String> command = options.getCommand();
+    assertTrue(command.contains("-p 20 50"));
   }
 
   public void testNullAnnotation() throws URISyntaxException {

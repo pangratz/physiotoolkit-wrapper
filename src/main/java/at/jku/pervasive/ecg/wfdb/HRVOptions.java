@@ -11,6 +11,7 @@ public class HRVOptions {
   private File baseDirectory;
   private String file, annotation;
   private double filt, hwin;
+  private String filter;
   private String inputTimeFormat;
   private boolean isRR;
   private double lo1, hi1, lo2, hi2, lo3, hi3, lo4, hi4;
@@ -66,6 +67,12 @@ public class HRVOptions {
     }
     if (shortTermStats) {
       cmd.add("-s");
+    }
+    if (filter != null && filter.length() > 0) {
+      cmd.add("-f " + filter);
+    }
+    if (nnDiff != null && nnDiff.length() > 0) {
+      cmd.add("-p " + nnDiff);
     }
     if (isRR) {
       if (rrInMSec) {
@@ -188,6 +195,11 @@ public class HRVOptions {
 
   public HRVOptions setFilt(double filt) {
     this.filt = filt;
+    return this;
+  }
+
+  public HRVOptions setFilter(String filter) {
+    this.filter = filter;
     return this;
   }
 
