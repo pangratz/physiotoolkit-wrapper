@@ -6,21 +6,23 @@ import java.util.List;
 
 import org.joda.time.LocalTime;
 
-public class SqrsOptions {
+public class DetectQRSOptions {
 
+  private String command;
   private boolean highResolutionMode;
   private final File record;
   private int signal = -1, treshold = -1;
   private LocalTime startTime, endTime;
 
-  public SqrsOptions(File record) {
+  public DetectQRSOptions(File record) {
     super();
+    this.command = "sqrs";
     this.record = record;
   }
 
   public List<String> getCommand() {
     List<String> cmd = new LinkedList<String>();
-    cmd.add("sqrs");
+    cmd.add(command);
     cmd.add("-r");
     cmd.add(record.getName());
 
@@ -75,27 +77,32 @@ public class SqrsOptions {
     return highResolutionMode;
   }
 
-  public SqrsOptions setEndTime(LocalTime endTime) {
+  public DetectQRSOptions setCommand(String command) {
+    this.command = command;
+    return this;
+  }
+
+  public DetectQRSOptions setEndTime(LocalTime endTime) {
     this.endTime = endTime;
     return this;
   }
 
-  public SqrsOptions setHighResolutionMode(boolean highResolutionMode) {
+  public DetectQRSOptions setHighResolutionMode(boolean highResolutionMode) {
     this.highResolutionMode = highResolutionMode;
     return this;
   }
 
-  public SqrsOptions setSignal(int signal) {
+  public DetectQRSOptions setSignal(int signal) {
     this.signal = signal;
     return this;
   }
 
-  public SqrsOptions setStartTime(LocalTime startTime) {
+  public DetectQRSOptions setStartTime(LocalTime startTime) {
     this.startTime = startTime;
     return this;
   }
 
-  public SqrsOptions setTreshold(int treshold) {
+  public DetectQRSOptions setTreshold(int treshold) {
     this.treshold = treshold;
     return this;
   }

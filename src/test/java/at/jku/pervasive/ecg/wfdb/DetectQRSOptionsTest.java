@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.joda.time.LocalTime;
 
-public class SqrsOptionsTest extends PhysioToolkitTestCase {
+public class DetectQRSOptionsTest extends PhysioToolkitTestCase {
 
   public void testEndTime() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
-    SqrsOptions options = new SqrsOptions(record);
+    DetectQRSOptions options = new DetectQRSOptions(record);
     options.setEndTime(new LocalTime(3, 4, 5));
 
     List<String> command = options.getCommand();
@@ -23,7 +23,7 @@ public class SqrsOptionsTest extends PhysioToolkitTestCase {
 
   public void testFile() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
-    SqrsOptions options = new SqrsOptions(record);
+    DetectQRSOptions options = new DetectQRSOptions(record);
 
     List<String> command = options.getCommand();
     assertNotNull(command);
@@ -35,7 +35,7 @@ public class SqrsOptionsTest extends PhysioToolkitTestCase {
 
   public void testHighResolutionMode() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
-    SqrsOptions options = new SqrsOptions(record);
+    DetectQRSOptions options = new DetectQRSOptions(record);
     options.setHighResolutionMode(true);
 
     List<String> command = options.getCommand();
@@ -45,7 +45,7 @@ public class SqrsOptionsTest extends PhysioToolkitTestCase {
 
   public void testSignal() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
-    SqrsOptions options = new SqrsOptions(record);
+    DetectQRSOptions options = new DetectQRSOptions(record);
     options.setSignal(1);
 
     List<String> command = options.getCommand();
@@ -56,9 +56,27 @@ public class SqrsOptionsTest extends PhysioToolkitTestCase {
     assertTrue(sIndex + 1 == command.indexOf("1"));
   }
 
+  public void testSqrs() throws URISyntaxException {
+    File record = getWFDBFile("/chf03.dat");
+    DetectQRSOptions options = new DetectQRSOptions(record);
+    options.setCommand("sqrs");
+
+    List<String> command = options.getCommand();
+    assertEquals("sqrs", command.get(0));
+  }
+
+  public void testSqrs125() throws URISyntaxException {
+    File record = getWFDBFile("/chf03.dat");
+    DetectQRSOptions options = new DetectQRSOptions(record);
+    options.setCommand("sqrs125");
+
+    List<String> command = options.getCommand();
+    assertEquals("sqrs125", command.get(0));
+  }
+
   public void testStartTime() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
-    SqrsOptions options = new SqrsOptions(record);
+    DetectQRSOptions options = new DetectQRSOptions(record);
     options.setStartTime(new LocalTime(1, 2, 3));
 
     List<String> command = options.getCommand();
@@ -71,7 +89,7 @@ public class SqrsOptionsTest extends PhysioToolkitTestCase {
 
   public void testTreshold() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
-    SqrsOptions options = new SqrsOptions(record);
+    DetectQRSOptions options = new DetectQRSOptions(record);
     options.setTreshold(123);
 
     List<String> command = options.getCommand();
