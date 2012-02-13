@@ -38,6 +38,7 @@ public class Edf2MitOptionsTest extends PhysioToolkitTestCase {
     List<String> command = options.getCommand();
     assertEquals(6, command.size());
     assertTrue(command.contains("-b"));
+    assertTrue(command.indexOf("-b") > command.indexOf("edf2mit"));
   }
 
   public void testDefaultEndian() throws URISyntaxException {
