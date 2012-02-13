@@ -64,6 +64,9 @@ public class HRVOptions {
     if (outputMsec) {
       cmd.add("-M");
     }
+    if (shortTermStats) {
+      cmd.add("-s");
+    }
     if (isRR) {
       if (rrInMSec) {
         cmd.add("-m");

@@ -180,6 +180,14 @@ public class HRVOptionsTest extends PhysioToolkitTestCase {
     assertEquals("qrs", cmd.get(2));
   }
 
+  public void testShortTerm() {
+    HRVOptions opts = new HRVOptions("/rrfile.rr");
+    opts.setShortTermStats(true);
+
+    List<String> command = opts.getCommand();
+    assertTrue(command.contains("-s"));
+  }
+
   public void testStartTime() {
     HRVOptions opts = new HRVOptions("/rrfile.rr");
     opts.setStart(10, 11);
