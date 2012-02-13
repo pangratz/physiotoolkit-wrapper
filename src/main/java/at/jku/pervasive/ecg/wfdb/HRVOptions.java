@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalTime;
 
 public class HRVOptions {
@@ -68,10 +69,10 @@ public class HRVOptions {
     if (shortTermStats) {
       cmd.add("-s");
     }
-    if (filter != null && filter.length() > 0) {
+    if (StringUtils.isNotBlank(filter)) {
       cmd.add("-f " + filter);
     }
-    if (nnDiff != null && nnDiff.length() > 0) {
+    if (StringUtils.isNotBlank(nnDiff)) {
       cmd.add("-p " + nnDiff);
     }
     if (isRR) {
