@@ -13,6 +13,19 @@ import org.joda.time.LocalTime;
 
 public class PhysioToolkit {
 
+  public void detectQRS(DetectQRSOptions options) throws IOException,
+      InterruptedException {
+    ProcessBuilder pb = createProcessBuilder(options.getCommand());
+    pb.redirectErrorStream(true);
+    File baseDirectory = options.getBaseDirectory();
+    if (baseDirectory != null && baseDirectory.exists()) {
+      pb.directory(baseDirectory);
+    }
+    Process process = pb.start();
+    InputStream in = process.getInputStream();
+    System.out.println(IOUtils.toString(in));
+  }
+
   public String edf2mit(Edf2MitOptions options) throws IOException,
       InterruptedException {
     List<String> command = options.getCommand();

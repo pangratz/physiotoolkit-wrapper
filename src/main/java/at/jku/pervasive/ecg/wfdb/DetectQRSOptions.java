@@ -8,6 +8,7 @@ import org.joda.time.LocalTime;
 
 public class DetectQRSOptions {
 
+  private File baseDirectory;
   private String command;
   private boolean highResolutionMode;
   private final File record;
@@ -18,6 +19,13 @@ public class DetectQRSOptions {
     super();
     this.command = "sqrs";
     this.record = record;
+    if (record != null) {
+      this.baseDirectory = record.getParentFile();
+    }
+  }
+
+  public File getBaseDirectory() {
+    return baseDirectory;
   }
 
   public List<String> getCommand() {
@@ -75,6 +83,11 @@ public class DetectQRSOptions {
 
   public boolean isHighResolutionMode() {
     return highResolutionMode;
+  }
+
+  public DetectQRSOptions setBaseDirectory(File baseDirectory) {
+    this.baseDirectory = baseDirectory;
+    return this;
   }
 
   public DetectQRSOptions setCommand(String command) {

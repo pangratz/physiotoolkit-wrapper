@@ -8,6 +8,15 @@ import org.joda.time.LocalTime;
 
 public class DetectQRSOptionsTest extends PhysioToolkitTestCase {
 
+  public void testBaseDirectory() throws URISyntaxException {
+    File record = getWFDBFile("/chf03.dat");
+    DetectQRSOptions options = new DetectQRSOptions(record);
+
+    File baseDirectory = options.getBaseDirectory();
+    assertNotNull(baseDirectory);
+    assertEquals(record.getParentFile(), baseDirectory);
+  }
+
   public void testEndTime() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
     DetectQRSOptions options = new DetectQRSOptions(record);
