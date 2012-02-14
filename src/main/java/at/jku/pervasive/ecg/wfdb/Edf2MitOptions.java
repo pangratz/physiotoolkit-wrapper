@@ -44,7 +44,7 @@ public class Edf2MitOptions {
       command.add("-b");
     }
 
-    if (signals != null && signals.length > 0) {
+    if (ArrayUtils.isNotEmpty(signals)) {
       command.add("-s");
       command.add(StringUtils.join(ArrayUtils.toObject(signals), " "));
     }
