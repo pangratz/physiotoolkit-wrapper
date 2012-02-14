@@ -1,39 +1,21 @@
 package at.jku.pervasive.ecg.wfdb;
 
 import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalTime;
 
-//-c          use CSV (comma-separated value) output format
-// -f TIME     begin at specified time
-// -h          print this usage summary
-// -H          read multifrequency signals in high resolution mode
-// -l INTERVAL truncate output after the specified time interval (hh:mm:ss)
-// -p          print times and samples in physical units (default: raw units)
-// -P          same as -p, but with greater precision
-//              -p and -P may be followed by a character to choose a time
-//              format;  choices are:
-//  -pd (or -Pd)  print time of day and date if known
-//  -pe (or -Pe)  print elapsed time as <hours>:<minutes>:<seconds>
-//  -ph (or -Ph)  print elapsed time in hours
-//  -pm (or -Pm)  print elapsed time in minutes
-//  -ps (or -Ps)  print elapsed time in seconds
-//  -pS (or -PS)  print elapsed time in sample intervals
-// -s SIGNAL [SIGNAL ...]  print only the specified signal(s)
-// -S SIGNAL   search for a valid sample of the specified SIGNAL at or after
-//    the time specified with -f, and begin printing then
-// -t TIME     stop at specified time
-// -v          print column headings
-// -X          output in WFDB-XML format
 public class RdsampOptions {
 
   private File baseDirectory;
-  private String physicalUnit;
+  private PhysicalUnit physicalUnit;
   private final File record;
   private int[] signals;
   private LocalTime startTime, endTime;
-  private boolean useCSV, highResolutionMode, usePhysicalUnits,
-      printColumHeadings;
+  private boolean useCSV, highResolutionMode, printColumHeadings;
 
   public RdsampOptions(File record) {
     super();
@@ -48,11 +30,55 @@ public class RdsampOptions {
     return baseDirectory;
   }
 
+  // -s SIGNAL [SIGNAL ...] print only the specified signal(s)
+  /**
+   * TODO -l INTERVAL truncate output after the specified time interval
+   * (hh:mm:ss) TODO -S SIGNAL search for a valid sample of the specified SIGNAL
+   * at or after // the time specified with -f, and begin printing then
+   */
+  public List<String> getCommand() {
+    List<String> cmd = new LinkedList<String>();
+    cmd.add("rdsamp");
+    cmd.add("-r");
+    cmd.add(record.getName());
+
+    if (useCSV) {
+      cmd.add("-c");
+    }
+    if (printColumHeadings) {
+      cmd.add("-v");
+    }
+
+    if (ArrayUtils.isNotEmpty(signals)) {
+      cmd.add("-s");
+      cmd.add(StringUtils.join(ArrayUtils.toObject(signals), " "));
+    }
+
+    if (highResolutionMode) {
+      cmd.add("-H");
+    }
+
+    if (physicalUnit != null) {
+      cmd.add(physicalUnit.getParameter());
+    }
+
+    if (startTime != null) {
+      cmd.add("-f");
+      cmd.add(startTime.toString("HH:mm:ss"));
+    }
+    if (endTime != null) {
+      cmd.add("-t");
+      cmd.add(endTime.toString("HH:mm:ss"));
+    }
+
+    return cmd;
+  }
+
   public LocalTime getEndTime() {
     return endTime;
   }
 
-  public String getPhysicalUnit() {
+  public PhysicalUnit getPhysicalUnit() {
     return physicalUnit;
   }
 
@@ -80,10 +106,6 @@ public class RdsampOptions {
     return useCSV;
   }
 
-  public boolean isUsePhysicalUnits() {
-    return usePhysicalUnits;
-  }
-
   public RdsampOptions setBaseDirectory(File baseDirectory) {
     this.baseDirectory = baseDirectory;
     return this;
@@ -99,7 +121,7 @@ public class RdsampOptions {
     return this;
   }
 
-  public RdsampOptions setPhysicalUnit(String physicalUnit) {
+  public RdsampOptions setPhysicalUnit(PhysicalUnit physicalUnit) {
     this.physicalUnit = physicalUnit;
     return this;
   }
@@ -109,7 +131,7 @@ public class RdsampOptions {
     return this;
   }
 
-  public RdsampOptions setSignals(int[] signals) {
+  public RdsampOptions setSignals(int... signals) {
     this.signals = signals;
     return this;
   }
@@ -121,11 +143,6 @@ public class RdsampOptions {
 
   public RdsampOptions setUseCSV(boolean useCSV) {
     this.useCSV = useCSV;
-    return this;
-  }
-
-  public RdsampOptions setUsePhysicalUnits(boolean usePhysicalUnits) {
-    this.usePhysicalUnits = usePhysicalUnits;
     return this;
   }
 
