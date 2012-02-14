@@ -3,6 +3,7 @@ package at.jku.pervasive.ecg.wfdb;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,6 +12,7 @@ import org.joda.time.LocalTime;
 public class RdsampOptions {
 
   private File baseDirectory;
+  private final String outputName;
   private PhysicalUnit physicalUnit;
   private final File record;
   private int[] signals;
@@ -19,7 +21,7 @@ public class RdsampOptions {
 
   public RdsampOptions(File record) {
     super();
-
+    this.outputName = UUID.randomUUID().toString();
     this.record = record;
     if (record != null) {
       this.baseDirectory = record.getParentFile();
@@ -76,6 +78,10 @@ public class RdsampOptions {
 
   public LocalTime getEndTime() {
     return endTime;
+  }
+
+  public String getOutputName() {
+    return outputName;
   }
 
   public PhysicalUnit getPhysicalUnit() {

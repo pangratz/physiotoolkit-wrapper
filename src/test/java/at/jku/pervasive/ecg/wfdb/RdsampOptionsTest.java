@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalTime;
 
 public class RdsampOptionsTest extends PhysioToolkitTestCase {
@@ -11,6 +12,8 @@ public class RdsampOptionsTest extends PhysioToolkitTestCase {
   public void test() throws URISyntaxException {
     File record = getWFDBFile("/chf03.dat");
     RdsampOptions options = new RdsampOptions(record);
+
+    assertTrue(StringUtils.isNotBlank(options.getOutputName()));
 
     List<String> cmd = options.getCommand();
     assertNotNull(cmd);
