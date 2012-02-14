@@ -1,3 +1,7 @@
+### Prerequisites
+
+Installed [Homebrew](http://mxcl.github.com/homebrew/) so ```WFDB``` and ```HRV Toolkit``` can be easily added to the ```PATH``` environment variable. If Homebrew is not installed, you have to make sure the installed package locations are set in the ```PATH```.
+
 ## Install WFDB
 
 - download and unzip http://physionet.org/physiotools/wfdb.tar.gz
