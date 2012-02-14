@@ -1,16 +1,21 @@
 package at.jku.pervasive.ecg.wfdb;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+
+import com.google.common.io.Files;
 
 public class PhysioToolkitTestCase extends TestCase {
 
   protected PhysioToolkit physioToolkit;
+  protected File tmpDir;
 
   public void testGetFile() throws Exception {
     File file = getFile("/chf03.dat");
@@ -28,6 +33,11 @@ public class PhysioToolkitTestCase extends TestCase {
     assertTrue(physioToolkit.isInstalled());
   }
 
+  protected File copyFileToTemp(File f) throws IOException {
+    FileUtils.copyFileToDirectory(f, tmpDir);
+    return new File(tmpDir, f.getName());
+  }
+
   protected File getFile(String path) throws URISyntaxException {
     URL url = this.getClass().getResource(path);
     return new File(url.toURI());
@@ -43,11 +53,17 @@ public class PhysioToolkitTestCase extends TestCase {
   @Override
   protected void setUp() throws Exception {
     physioToolkit = new PhysioToolkit();
+
+    tmpDir = Files.createTempDir();
   }
 
   @Override
   protected void tearDown() throws Exception {
     physioToolkit = null;
+
+    if (tmpDir != null) {
+      tmpDir.delete();
+    }
   }
 
 }

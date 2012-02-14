@@ -1,6 +1,8 @@
 package at.jku.pervasive.ecg.wfdb;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.joda.time.LocalTime;
 
@@ -12,7 +14,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   private static final double DELTA = 0.00000D;
 
   public void testBaseDirectoryForRecord() throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRVOptions options = new HRVOptions("chf03", "ecg");
     options.setBaseDirectory(chf03.getParentFile());
     HRV hrv = physioToolkit.hrv(options);
@@ -23,7 +25,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFile() throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRV hrv = physioToolkit.hrv(chf03, "ecg");
 
     assertNotNull(hrv);
@@ -32,7 +34,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFileHRVOptions() throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRVOptions options = new HRVOptions(chf03, "ecg");
     HRV hrv = physioToolkit.hrv(options);
 
@@ -42,7 +44,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFileHRVOptionsWithOutlierDetection() throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRVOptions options = new HRVOptions(chf03, "ecg");
     options.setFilter("0.2 20 -x 0.4 2.0");
     options.setNnDiff("20 50");
@@ -65,7 +67,7 @@ public class HrvTest extends PhysioToolkitTestCase {
 
   public void testLargeFileWithHRVOptionsAndOutlierDetectionAndStartAndEndTime()
       throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRVOptions options = new HRVOptions(chf03, "ecg");
     options.setOutputMsec(true).setShortTermStats(true);
     options.setStart(0, 0).setEnd(new LocalTime(1, 0));
@@ -88,7 +90,7 @@ public class HrvTest extends PhysioToolkitTestCase {
   }
 
   public void testLargeFileWithOutlierDetection() throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRV hrv = physioToolkit.hrv(chf03, "ecg", "-f 0.2 20 -x 0.4 2.0",
         "-p 20 50");
 
@@ -109,7 +111,7 @@ public class HrvTest extends PhysioToolkitTestCase {
 
   public void testLargeFileWithOutlierDetectionAndStartAndEndTime()
       throws Exception {
-    File chf03 = getWFDBFile("/chf03.dat");
+    File chf03 = getTestFile();
     HRV hrv = physioToolkit.hrv(chf03, "ecg", new LocalTime(0, 0),
         new LocalTime(1, 0), "-s", "-M", "-f 0.2 20 -x 0.4 2.0", "-p 20 50");
 
@@ -125,6 +127,13 @@ public class HrvTest extends PhysioToolkitTestCase {
     assertEquals(103.941, hrv.getLF_PWR(), DELTA);
     assertEquals(176.008, hrv.getHF_PWR(), DELTA);
     assertEquals(0.590547, hrv.getLFHF(), DELTA);
+  }
+
+  protected File getTestFile() throws URISyntaxException, IOException {
+    copyFileToTemp(getFile("/chf03.ecg"));
+    copyFileToTemp(getFile("/chf03.dat"));
+    copyFileToTemp(getFile("/chf03.hea"));
+    return new File(tmpDir, "chf03");
   }
 
 }

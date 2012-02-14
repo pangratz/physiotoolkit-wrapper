@@ -4,19 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.apache.commons.io.FileUtils;
-
-import com.google.common.io.Files;
-
 public class DetectQRSTest extends PhysioToolkitTestCase {
-
-  private File tmpDir;
 
   public void testSqrs() throws URISyntaxException, IOException,
       InterruptedException {
-    copyFileToTemp(getFile("/chf03.hea"));
-    copyFileToTemp(getFile("/chf03.dat"));
-    File testFile = new File(tmpDir, "chf03");
+    File testFile = getTestFile();
 
     DetectQRSOptions options = new DetectQRSOptions(testFile);
     physioToolkit.detectQRS(options);
@@ -27,9 +19,7 @@ public class DetectQRSTest extends PhysioToolkitTestCase {
 
   public void testSqrs125() throws URISyntaxException, IOException,
       InterruptedException {
-    copyFileToTemp(getFile("/chf03.hea"));
-    copyFileToTemp(getFile("/chf03.dat"));
-    File testFile = new File(tmpDir, "chf03");
+    File testFile = getTestFile();
 
     DetectQRSOptions options = new DetectQRSOptions(testFile);
     options.setCommand("sqrs125");
@@ -41,9 +31,7 @@ public class DetectQRSTest extends PhysioToolkitTestCase {
 
   public void testWqrs() throws URISyntaxException, IOException,
       InterruptedException {
-    copyFileToTemp(getFile("/chf03.hea"));
-    copyFileToTemp(getFile("/chf03.dat"));
-    File testFile = new File(tmpDir, "chf03");
+    File testFile = getTestFile();
 
     DetectQRSOptions options = new WqrsOptions(testFile);
     physioToolkit.detectQRS(options);
@@ -52,25 +40,10 @@ public class DetectQRSTest extends PhysioToolkitTestCase {
     assertTrue(qrsFile.exists());
   }
 
-  protected File copyFileToTemp(File f) throws IOException {
-    FileUtils.copyFileToDirectory(f, tmpDir);
-    return new File(tmpDir, f.getName());
-  }
-
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
-
-    tmpDir = Files.createTempDir();
-  }
-
-  @Override
-  protected void tearDown() throws Exception {
-    super.tearDown();
-
-    if (tmpDir != null) {
-      tmpDir.delete();
-    }
+  protected File getTestFile() throws IOException, URISyntaxException {
+    copyFileToTemp(getFile("/chf03.hea"));
+    copyFileToTemp(getFile("/chf03.dat"));
+    return new File(tmpDir, "chf03");
   }
 
 }
