@@ -1,3 +1,5 @@
+## Install WFDB
+
 - download and unzip http://physionet.org/physiotools/wfdb.tar.gz
 - cd into the unzipped folder
 - mate conf/darwin*
@@ -7,6 +9,7 @@
 - execute: "make check" to see if tests pass
 - add WFDB to path by "brew link wfdb"
     
+## Install HRV Toolkit
     
 - download and unzip http://physionet.org/tutorials/hrv-toolkit/HRV-i386-Darwin.tar.gz
 - cd into unzipped folder
