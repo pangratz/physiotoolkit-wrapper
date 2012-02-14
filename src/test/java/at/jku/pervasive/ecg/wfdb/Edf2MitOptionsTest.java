@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class Edf2MitOptionsTest extends PhysioToolkitTestCase {
 
   public void test() throws URISyntaxException {
@@ -25,7 +27,7 @@ public class Edf2MitOptionsTest extends PhysioToolkitTestCase {
     assertTrue(command.contains("-r"));
     int rIndex = command.indexOf("-r");
     String outputName = options.getOutputName();
-    assertNotNull(outputName);
+    assertTrue(StringUtils.isNotBlank(options.getOutputName()));
     assertTrue(command.contains(outputName));
     assertTrue(rIndex + 1 == command.indexOf(outputName));
   }
