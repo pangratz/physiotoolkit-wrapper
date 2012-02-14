@@ -1,6 +1,7 @@
 package at.jku.pervasive.ecg.wfdb;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -113,6 +114,19 @@ public class PhysioToolkit {
     pb.directory(edf.getParentFile());
     Process process = pb.start();
     process.waitFor();
+  }
+
+  public File rdsamp(RdsampOptions options) throws IOException,
+      InterruptedException {
+    ProcessBuilder pb = createProcessBuilder(options.getCommand());
+    File baseDirectory = options.getBaseDirectory();
+    pb.directory(baseDirectory);
+    File outputFile = new File(baseDirectory, options.getOutputName());
+    Process process = pb.start();
+    InputStream in = process.getInputStream();
+    IOUtils.copy(in, new FileOutputStream(outputFile));
+    process.waitFor();
+    return outputFile;
   }
 
   public void sqrs(File testFile) throws IOException, InterruptedException {
