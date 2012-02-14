@@ -5,6 +5,7 @@
 - Installed [WFDB](http://www.physionet.org/physiotools/wfdb.shtml) software package
 - Installed [HRV Toolkit](http://www.physionet.org/tutorials/hrv-toolkit/)
 - [Maven](http://maven.apache.org/) for building
+- Rake (to get the test files)
 
 ### Installation
 
@@ -15,7 +16,9 @@ cd physiotoolkit-wrapper
 
 #### Execute tests
 
-Run ```mvn clean test```
+Download the files needed for the tests via executing ```rake```. This has to be done once.
+
+Run all tests via ```mvn clean test```
 
 #### Create JAR
 
