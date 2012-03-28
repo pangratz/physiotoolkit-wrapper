@@ -4,13 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.UUID;
 
 import junit.framework.TestCase;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-
-import com.google.common.io.Files;
 
 public class PhysioToolkitTestCase extends TestCase {
 
@@ -54,7 +53,9 @@ public class PhysioToolkitTestCase extends TestCase {
   protected void setUp() throws Exception {
     physioToolkit = new PhysioToolkit();
 
-    tmpDir = Files.createTempDir();
+    File tmpFile = File.createTempFile(UUID.randomUUID().toString(), "tmp");
+    tmpDir = new File(tmpFile.getParentFile(), UUID.randomUUID().toString());
+    tmpDir.mkdirs();
   }
 
   @Override
